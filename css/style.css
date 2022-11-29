@@ -1,0 +1,35 @@
+*{
+    margin:0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.logo-img{
+    height: 2vh;
+    margin-left: 2vw;
+}
+.navbar{
+    background-color: #D9D9D9;
+    font-weight: 600;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 7vh;
+}
+
+.link ul li a:hover, .color-link:hover{
+    color: #85339b!important;
+}
+.link ul li a{
+    margin-right: 3vh;
+    text-decoration: none;
+    color: black;
+}
+.link ul{
+    display: flex;
+    align-items: center;
+}
+.link ul li{
+    list-style: none;
+}
