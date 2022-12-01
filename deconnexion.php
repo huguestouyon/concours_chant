@@ -9,6 +9,6 @@ if(!isset($_SESSION["user"])) {
 unset($_SESSION["user"]);
 
 
-header("Location: inscription.php");
+header("Location: connexion.php");
 
 ?> 

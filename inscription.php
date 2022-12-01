@@ -70,7 +70,8 @@ if (!empty($_POST)) {
                     "surname" => $_POST["surname"],
                     "name" => $_POST["name"],
                     "email" => $_POST["email"],
-                    "birthday" => $_POST["birthday"]
+                    "birthday" => $_POST["birthday"],
+                    "age" => $age
                     
                 ];
                 if ($age < 18) {
