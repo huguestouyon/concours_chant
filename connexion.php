@@ -59,15 +59,33 @@ require('includes/header.php');
 
 ?>
 
+
 <form action="" method="post">
-    <div>
-       <input type="email" name="email"> 
-    </div>
-    <div>
-        <input type="password" name="pass">
-    </div>
-    <div>
-        <button type="submit">Confirmer</button>
+
+    <div class="container">
+        <div class="images">
+            <img src="images/img_connexion.svg" alt="">
+        </div>
+        <div class="col-right">
+            <div class="connexion">
+                  <h1>Authentification</h1><br>
+                <div class="email">
+                    <img src="images/email.svg" alt="">
+                    <input type="email" name="email" placeholder="Email"> 
+                </div>
+                <div class="pass">
+                    <input type="password" name="pass" placeholder="Mot de passe">
+                </div>
+                <br>
+                <div class="submit">
+                    <button type="submit">Connexion</button>
+                </div>
+            </div>
+            <div class="btn-inscription">
+                <p>Vous n'avez pas encore de compte ?</p>
+                <button>Inscrivez-vous ici</button>
+            </div>
+        </div>
     </div>
 </form>
 

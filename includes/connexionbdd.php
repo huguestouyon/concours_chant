@@ -2,7 +2,7 @@
     $dbname = "concours_chant";
     $dbhost = "localhost";
     $dbpass = "Greta1234!";
-    $dbuser = "greta";
+    $dbuser = "greta2";
     try {
         $dsn = "mysql:dbname=".$dbname.";host=".$dbhost;
         $db = new PDO($dsn, $dbuser, $dbpass);

@@ -5,6 +5,17 @@ if (!isset($_SESSION["user"])) {
     exit;
 }
 
+include "includes/connexionbdd.php";
+$sql = "SELECT * FROM `representantlegal` WHERE `id_user` = :id";
+$query = $db->prepare($sql);
+$query->bindValue(":id", $_SESSION["user"]["id"], PDO::PARAM_STR);
+$query->execute();
+$verifage = $query->fetch();
+
+if ($_SESSION["age"] < 18 && empty($verifage)) {
+   header("Location: responsable.php");
+}
+
 // Déconnexion a 30min d'innactivité
 if (isset($_SESSION["LAST_ACTIVITY"]) && time() - $_SESSION["LAST_ACTIVITY"] > 1800) {
     header("Location: deconnexion.php");

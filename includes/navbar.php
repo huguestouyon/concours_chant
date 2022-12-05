@@ -3,13 +3,13 @@
             <a href="index.php" class="nav-logo"><img class="logo-img" src="images\Les Voix de l’Audomarois.svg" alt="logo voix de l'audomarois"></a>
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Admin</a>
+                    <a href="index.php" class="nav-link">Admin</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">Mon Suivi</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Contact</a>
+                    <a href="contact.php" class="nav-link">Contact</a>
                 </li>
                 <li class="nav-item">
                     <a href="deconnexion.php" class="nav-link"><i class="color-link text-dark fa-solid fa-power-off"></i></a>
@@ -22,6 +22,7 @@
             </div>
         </nav>
 </header>
+
 
 <script>
     const hamburger = document.querySelector(".hamburger");

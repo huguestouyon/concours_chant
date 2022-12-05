@@ -52,25 +52,23 @@ include('includes/header.php');
     //     console.log(input)
     function urlChange() {
     url = "https://shazam.p.rapidapi.com/auto-complete?term="+input.value+"&locale=fr_FR";
-    return url;
-
 }
-//input.addEventListener('input',urlChange);
-//test2.innerText = ;
+// input.addEventListener('input',urlChange);
 
 var settings = {
         "async": true,
         "crossDomain": true,
-        "url": "https://shazam.p.rapidapi.com/auto-complete?term=john&locale=fr_FR",
+        //"url": return,
+        "url": url,
         "method": "GET",
         "headers": {
             "X-RapidAPI-Key": "ed3ed5bec9mshcb4fa77058cfd9ep1fbc89jsn771de5eb28e9",
             "X-RapidAPI-Host": "shazam.p.rapidapi.com"
         }
     };
+    // settings["url"] = 'https://shazam.p.rapidapi.com/auto-complete?term=&locale=fr_FR';
 
-// settings['url'] = "https://shazam.p.rapidapi.com/auto-complete?term=uu&locale=fr_FR";
-settings['url'] = "https://shazam.p.rapidapi.com/auto-complete?term=boo&locale=fr-FR"
+
 
 
 
@@ -81,7 +79,6 @@ settings['url'] = "https://shazam.p.rapidapi.com/auto-complete?term=boo&locale=f
 
 
     $.ajax(settings).done(function (response) {
-
         rep = response.hints;
         //console.log(rep)
         // tab = tab.push(response.hints)

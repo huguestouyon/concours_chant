@@ -107,7 +107,7 @@ require('includes/header.php');
         <input type="email" placeholder="Email" name="email">
     </div>
     <div>
-        <input type="date" placeholder="Date de naissance" name="birthday">
+        <input type="date" value="2000-01-01" placeholder="Date de naissance" name="birthday">
     </div>
     <div>
         <input type="password" placeholder="Mot de passe" name="pass">

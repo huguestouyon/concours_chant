@@ -8,6 +8,7 @@ if (!isset($_SESSION["user"])) {
     header("Location: connexion.php");
     exit;
 }
+
 if (isset($_SESSION["user"]["age"]) && $_SESSION["user"]["age"] >= 14 && $_SESSION["user"]["age"] < 18) {
     if (!empty($_POST)) {
 
@@ -30,7 +31,7 @@ if (isset($_SESSION["user"]["age"]) && $_SESSION["user"]["age"] >= 14 && $_SESSI
                 $_SESSION['error'][] = "Mauvaise date";
             }
     
-            // Verification de l'age (Superieur a 14 ans)
+            // Verification de l'age (Superieur a 18 ans)
             $dateToday = date("Y-m-d");
             $age = date_diff(date_create($_POST["birthday"]), date_create($dateToday));
             $age = $age->format('%y');
@@ -64,13 +65,13 @@ include "includes/header.php";
 
 <form action="" method="post">
     <div>
-        <input type="text" name="name">
+        <input type="text" name="name" placeholder="Nom">
     </div>
     <div>
-        <input type="text" name="surname">
+        <input type="text" name="surname" placeholder="Prénom">
     </div>
     <div>
-        <input type="email" name="email">
+        <input type="email" name="email" placeholder="Email">
     </div>
     <div>
         <input type="date" name="birthday">
