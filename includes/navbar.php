@@ -6,7 +6,7 @@
                     <a href="index.php" class="nav-link">Admin</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Mon Suivi</a>
+                    <a href="api.php" class="nav-link">Mon Suivi</a>
                 </li>
                 <li class="nav-item">
                     <a href="contact.php" class="nav-link">Contact</a>

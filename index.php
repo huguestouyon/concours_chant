@@ -1,5 +1,7 @@
 <?php
 session_start();
+error_reporting(E_ALL);
+ini_set("display_errors",1);
 if (!isset($_SESSION["user"])) {
     header("Location: connexion.php");
     exit;
@@ -12,8 +14,10 @@ $query->bindValue(":id", $_SESSION["user"]["id"], PDO::PARAM_STR);
 $query->execute();
 $verifage = $query->fetch();
 
-if ($_SESSION["age"] < 18 && empty($verifage)) {
-   header("Location: responsable.php");
+if (isset($_SESSION["age"])){
+    if($_SESSION["age"] < 18 && empty($verifage)) {
+        header("Location: responsable.php");
+    }
 }
 
 // Déconnexion a 30min d'innactivité

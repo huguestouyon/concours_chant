@@ -1,7 +1,8 @@
 <?php
-echo "<pre>";
-var_dump($_FILES);
-echo "</pre>";
+
+// echo "<pre>";
+// var_dump($_FILES);
+// echo "</pre>";
 
 // Permet de récupérer les caractéristiques du fichier (nom, type, nom repertoire tmp, erreur et taille)
 
@@ -11,7 +12,8 @@ if (isset($_FILES["music"]) && $_FILES["music"]["error"] === 0) {
         "oga" => "audio/ogg",
         "opus" => "audio/opus",
         "wav" => "audio/wav",
-        "weba" => "audio/webm"
+        "weba" => "audio/webm",
+        "flac" => "audio/flac"
     ];
 
     // Récupération des info contenus dans $_FILES
@@ -44,29 +46,26 @@ if (isset($_FILES["music"]) && $_FILES["music"]["error"] === 0) {
     // Générer le fichier avec un nom unique
     $newname = md5(uniqid());
     // On génère le chemin complet
-    // echo __DIR__;
+    //echo __DIR__;
     $newfilename = __DIR__ . "/uploads/$newname.$extension";
+    echo $newfilename;
 
     if (!move_uploaded_file($_FILES["music"]["tmp_name"], $newfilename)) {
         $_SESSION["error"] = ["Échec de l'upload"];
         //exit; // équivalent à die;
     }
+    include "includes/connexionbdd.php";
+
+    var_dump($newname);
+
+    
 }
 
+include "includes/header.php";
+include "includes/navbar.php";
 
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Envoyer mp3</title>
-</head>
-
-<body>
     <h1>Envoyer votre fichier mp3</h1>
     <form action="" method="post" enctype="multipart/form-data">
         <div>
@@ -84,5 +83,6 @@ if(isset($_SESSION["error"])){
     var_dump($_SESSION["error"]);
     unset($_SESSION["error"]);
 }
+
+include "includes/footer.php";
 ?>
-</html>

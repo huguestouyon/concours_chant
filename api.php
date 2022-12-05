@@ -1,123 +1,84 @@
 <?php
+session_start();
+error_reporting(E_ALL);
+ini_set("display_errors",1);
+$title = 'Mon suivi';
 include('includes/header.php');
-// $url = "https://shazam.p.rapidapi.com/auto-complete?term=".str_replace(' ', '+',$_POST['music'])."&locale=fr-FR";
-// $curl = curl_init();
+require "includes/connexionbdd.php";
 
-// curl_setopt_array($curl, [
-// 	CURLOPT_URL => $url,
-// 	CURLOPT_RETURNTRANSFER => true,
-// 	CURLOPT_FOLLOWLOCATION => true,
-// 	CURLOPT_ENCODING => "",
-// 	CURLOPT_MAXREDIRS => 10,
-// 	CURLOPT_TIMEOUT => 30,
-// 	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-// 	CURLOPT_CUSTOMREQUEST => "GET",
-// 	CURLOPT_HTTPHEADER => [
-// 		"X-RapidAPI-Host: shazam.p.rapidapi.com",
-// 		"X-RapidAPI-Key: 0765394f0amsh8eb909d1b3c6247p145d55jsnee4ff1c1e231"
-// 	],
-// ]);
 
-// $response = curl_exec($curl);
-// $parsee=json_decode(curl_exec($curl), true);
-// $err = curl_error($curl);
+$sql = "SELECT * FROM `validation` WHERE `id_user` = :id";
+$query = $db->prepare($sql);
+$query->bindValue(":id", $_SESSION["user"]["id"], PDO::PARAM_STR);
+$query->execute();
+$verifid = $query->fetch();
 
-// curl_close($curl);
-
-// if ($err) {
-// 	echo "cURL Error #:" . $err;
+// if (!empty($verifid)) {
+//    header('Location: suivi.php');
 // }
-?>
 
-<label for="autocomplete">Select a programming language: </label>
-    <input id="autocomplete">
-    <div class="test2"></div>
-    <script>
-    // console.log(document.getElementById('autocomplete').value
-    // console.log(variable)
-    input = document.querySelector("#autocomplete");
-    test2 = document.querySelector(".test2");
-    var url = "https://shazam.p.rapidapi.com/auto-complete?term=&locale=fr_FR";  
+if (!empty($_GET['music'])) {
+    $url = "https://shazam.p.rapidapi.com/search?term=".str_replace(' ', '%20',$_GET['music'])."&locale=fr-FR&offset=0&limit=5";
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+	CURLOPT_URL => $url,
+	CURLOPT_RETURNTRANSFER => true,
+	CURLOPT_FOLLOWLOCATION => true,
+	CURLOPT_ENCODING => "",
+	CURLOPT_MAXREDIRS => 10,
+	CURLOPT_TIMEOUT => 30,
+	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	CURLOPT_CUSTOMREQUEST => "GET",
+	CURLOPT_HTTPHEADER => [
+		"X-RapidAPI-Host: shazam.p.rapidapi.com",
+		"X-RapidAPI-Key: 0765394f0amsh8eb909d1b3c6247p145d55jsnee4ff1c1e231"
+	],
+]);
+
+$response = curl_exec($curl);
+$parsee=json_decode(curl_exec($curl), true);
+$err = curl_error($curl);
+
+curl_close($curl);
 
 
 
-
-    // console.log(document.querySelector("#text").values)
-    // var val_rechercher="";
-    // function update_val(){
-    //     val_rechercher=document.querySelector('input').value;
-    // }
-    //     console.log(val_rechercher)
-    //     let input = document.querySelector('input').value;
-    //     console.log(input)
-    function urlChange() {
-    url = "https://shazam.p.rapidapi.com/auto-complete?term="+input.value+"&locale=fr_FR";
-    return url;
+if ($err) {
+	echo "cURL Error #:" . $err;
+}
 
 }
-//input.addEventListener('input',urlChange);
-//test2.innerText = ;
 
-var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": "https://shazam.p.rapidapi.com/auto-complete?term=john&locale=fr_FR",
-        "method": "GET",
-        "headers": {
-            "X-RapidAPI-Key": "ed3ed5bec9mshcb4fa77058cfd9ep1fbc89jsn771de5eb28e9",
-            "X-RapidAPI-Host": "shazam.p.rapidapi.com"
+
+if (!empty($_POST['track'])) {
+     $sql = "INSERT INTO `validation`(`id_user`, `title_chosen`) VALUES (:id,:title)";
+     $query = $db->prepare($sql);
+     $query->bindValue(":id", $_SESSION['user']['id'], PDO::PARAM_STR);
+     $query->bindValue(":title", $_POST['track'], PDO::PARAM_STR);
+     $query->execute();
+ }
+?>
+
+<form action="" method="get">
+    <label for="autocomplete">Select a programming language: </label>
+    <input name="music" id="autocomplete">
+    <button type="submit">loupe</button>
+</form>
+<form action="" method="post">
+    <select name="track" id="search">
+    <?php
+    for ($i=0; $i < 3; $i++) { 
+        if (!empty($parsee['tracks']['hits'][$i]['track']['title'])) {
+            $value = str_replace(' ', '+',$parsee['tracks']['hits'][$i]['track']['title'])."+PAR".str_replace(' ', '+',$parsee['tracks']['hits'][$i]['track']['subtitle']);
+            echo "<option value=".$value.">".$parsee['tracks']['hits'][$i]['track']['title']." par ".$parsee['tracks']['hits'][$i]['track']['subtitle']."</option>";
+                }
         }
-    };
-
-// settings['url'] = "https://shazam.p.rapidapi.com/auto-complete?term=uu&locale=fr_FR";
-settings['url'] = "https://shazam.p.rapidapi.com/auto-complete?term=boo&locale=fr-FR"
-
-
-
-    let tab = []
-    let rep = '';
-    let test = [];
-    let responseTest = [];
-
-
-    $.ajax(settings).done(function (response) {
-
-        rep = response.hints;
-        //console.log(rep)
-        // tab = tab.push(response.hints)
-        // console.log(tab)
-        //console.log(rep)
-        // for (let i = 0; i < array.length; i++) {
-        //     const element = array[i];
-            
-        // }
-        test = Object.values(rep)
-        test.forEach(element => {
-            //console.log(element.term);
-            responseTest.push(element.term);
-        });
-        console.log(responseTest);
-        
-        //console.log(test[0].term)
-        // for (let i = 0; i < array.test; i++) {
-        //     console.log(test[i].term);
-        // }
-        
-        $( "#autocomplete" ).autocomplete({
-        // source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ]
-        source: responseTest
-    });
-    });
-    // rep.forEach(element => {
-    //         console.log(element)
-    //     });
-    // $( "#autocomplete" ).autocomplete({
-    //     // source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ]
-    //     //
-    // });
-
-
-    </script>
     
+   
+    ?>
+</select>
+<button type="submit">Valider</button>
+</form>
 </body>
 </html>
