@@ -2,8 +2,15 @@
 session_start();
 error_reporting(E_ALL);
 ini_set("display_errors",1);
+
+// Déconnexion a 30min d'innactivité
+if (isset($_SESSION["LAST_ACTIVITY"]) && time() - $_SESSION["LAST_ACTIVITY"] > 1800) {
+    header("Location: deconnexion.php");
+}
+$_SESSION["LAST_ACTIVITY"] = time();
+
 $title = 'Mon suivi';
-include('includes/header.php');
+
 require "includes/connexionbdd.php";
 
 
@@ -13,9 +20,9 @@ $query->bindValue(":id", $_SESSION["user"]["id"], PDO::PARAM_STR);
 $query->execute();
 $verifid = $query->fetch();
 
-// if (!empty($verifid)) {
-//    header('Location: suivi.php');
-// }
+if (!empty($verifid)) {
+    header('Location: suivi.php');
+ }
 
 if (!empty($_GET['music'])) {
     $url = "https://shazam.p.rapidapi.com/search?term=".str_replace(' ', '%20',$_GET['music'])."&locale=fr-FR&offset=0&limit=5";
@@ -32,7 +39,7 @@ curl_setopt_array($curl, [
 	CURLOPT_CUSTOMREQUEST => "GET",
 	CURLOPT_HTTPHEADER => [
 		"X-RapidAPI-Host: shazam.p.rapidapi.com",
-		"X-RapidAPI-Key: 0765394f0amsh8eb909d1b3c6247p145d55jsnee4ff1c1e231"
+		"X-RapidAPI-Key: 501264117fmsh6e9151960cef39fp17b375jsn8f757604d258"
 	],
 ]);
 
@@ -57,20 +64,56 @@ if (!empty($_POST['track'])) {
      $query->bindValue(":id", $_SESSION['user']['id'], PDO::PARAM_STR);
      $query->bindValue(":title", $_POST['track'], PDO::PARAM_STR);
      $query->execute();
+for ($a=0; $a < 4; $a++) { 
+    if (!empty($_POST) && $_POST['track'] === $parsee['tracks']['hits'][$a]['track']['key']) {
+     $sql = "INSERT INTO `chant`(`id_user`, `title`, `artist`, `image`, `id_chant`) VALUES (:id,:title,:artist,:img,:chant)";
+     $query = $db->prepare($sql);
+     $query->bindValue(":id", $_SESSION['user']['id'], PDO::PARAM_STR);
+     $query->bindValue(":title", $parsee['tracks']['hits'][$a]['track']['title'], PDO::PARAM_STR);
+     $query->bindValue(":artist", $parsee['tracks']['hits'][$a]['track']['subtitle'], PDO::PARAM_STR);
+     $query->bindValue(":chant", $parsee['tracks']['hits'][$a]['track']['key'], PDO::PARAM_STR);
+     $query->bindValue(":img", $parsee['tracks']['hits'][$a]['track']['share']['image'], PDO::PARAM_STR);
+     $query->execute();
+     header('Location: suivi.php');
+    }
+
+}
+
+    
+     
+   
  }
+
+ include('includes/header.php');
+ include('includes/navbar.php');
 ?>
 
+<div class="containerMonSuivi">
+<h2>Choix de la chanson</h2>
+<div class="thecontainerMonSuivi">
+    <div>
+        <img src="images/Group 1.svg" alt="illustration">
+    </div>
+    <div class="choseSong">
 <form action="" method="get">
-    <label for="autocomplete">Select a programming language: </label>
-    <input name="music" id="autocomplete">
-    <button type="submit">loupe</button>
+    <div class="inForm">
+    <label for="complete">Recherche titre/artiste : </label>
+        <div>
+    <input name="music" id="complete">
+    <button type="submit"><i class="maGlass fa-solid fa-magnifying-glass"></i></button>
+    </div>
+    </div>
 </form>
-<form action="" method="post">
+<form class="secondForm" action="" method="post">
+<label for="track">Sélectionner : </label>
     <select name="track" id="search">
     <?php
-    for ($i=0; $i < 3; $i++) { 
+    
+    for ($i=0; $i < 4; $i++) { 
+        
         if (!empty($parsee['tracks']['hits'][$i]['track']['title'])) {
-            $value = str_replace(' ', '+',$parsee['tracks']['hits'][$i]['track']['title'])."+PAR".str_replace(' ', '+',$parsee['tracks']['hits'][$i]['track']['subtitle']);
+            $value = $parsee['tracks']['hits'][$i]['track']['key'];
+            
             echo "<option value=".$value.">".$parsee['tracks']['hits'][$i]['track']['title']." par ".$parsee['tracks']['hits'][$i]['track']['subtitle']."</option>";
                 }
         }
@@ -78,7 +121,13 @@ if (!empty($_POST['track'])) {
    
     ?>
 </select>
-<button type="submit">Valider</button>
+<div class="buttonEnvoyer">
+<button type="submit">Envoyer</button>
+</div>
 </form>
-</body>
-</html>
+</div>
+</div>
+</div>
+<?php
+include('includes/footer.php');
+?>

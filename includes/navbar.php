@@ -2,9 +2,14 @@
         <nav class="navbar">
             <a href="index.php" class="nav-logo"><img class="logo-img" src="images\Les Voix de l’Audomarois.svg" alt="logo voix de l'audomarois"></a>
             <ul class="nav-menu">
+                <?php
+                if(isset($_SESSION['user']['admin'])):
+                ?>
                 <li class="nav-item">
-                    <a href="index.php" class="nav-link">Admin</a>
+                    <a href="admin.php" class="nav-link">Admin</a>
                 </li>
+                <?php endif;
+                ?>
                 <li class="nav-item">
                     <a href="api.php" class="nav-link">Mon Suivi</a>
                 </li>

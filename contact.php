@@ -13,10 +13,6 @@ $query->bindValue(":id", $_SESSION["user"]["id"], PDO::PARAM_STR);
 $query->execute();
 $verifage = $query->fetch();
 
-if ($_SESSION["age"] < 18 && empty($verifage)) {
-   header("Location: responsable.php");
-}
-
 // Déconnexion a 30min d'innactivité
 if (isset($_SESSION["LAST_ACTIVITY"]) && time() - $_SESSION["LAST_ACTIVITY"] > 1800) {
     header("Location: deconnexion.php");
@@ -25,16 +21,16 @@ $_SESSION["LAST_ACTIVITY"] = time();
 
 // Traitements
 if (!empty($_POST)) {
-    if (isset($_POST["email"], $_POST["subject"],$_POST["name"],$_POST["message"]) && !empty($_POST["email"]) && !empty($_POST["subject"]) && !empty($_POST["name"]) && !empty($_POST["message"])) {
-       $_SESSION["error"] = [];
+    if (isset($_POST["email"], $_POST["subject"], $_POST["name"], $_POST["message"]) && !empty($_POST["email"]) && !empty($_POST["subject"]) && !empty($_POST["name"]) && !empty($_POST["message"])) {
+        $_SESSION["error"] = [];
 
-       $subject = strip_tags($_POST["subject"]);
-       $name = strip_tags($_POST["name"]);
-       $message = strip_tags($_POST["message"]);
+        $subject = strip_tags($_POST["subject"]);
+        $name = strip_tags($_POST["name"]);
+        $message = strip_tags($_POST["message"]);
 
-       // Verification de l'email
-       if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-        $_SESSION['error'][] = "Ce n'est pas un email correcte";
+        // Verification de l'email
+        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            $_SESSION['error'][] = "Ce n'est pas un email correcte";
         }
         if ($_SESSION['error'] === []) {
 
@@ -48,10 +44,8 @@ if (!empty($_POST)) {
             $query->execute();
             $_SESSION["validate"] = ["Message envoyé"];
         }
-    }
-    else{
+    } else {
         $_SESSION["error"] = ["Les valeurs sont vides"];
-
     }
 }
 
@@ -63,39 +57,44 @@ $title = "Contact";
 require('includes/header.php');
 require('includes/navbar.php');
 ?>
-
-
-    <form action="" method="post">
-        <div>
-            <input type="text" name="name" placeholder="Nom, Prénom">
-        </div>
-        <div>
-            <input type="email" name="email" placeholder="Email" value="<?= $_SESSION['user']['email'] ?>">
-        </div>
-        <div>
-            <input type="text" name="subject" placeholder="Objet">
-        </div>
-        <div>
-            <input type="textarea" name="message" placeholder="Message">
-        </div>
-        <div>
-            <button type="submit">Valider</button>
-        </div>
-
-    </form>
-
+<h2 class="contact-title"> Contact </h2>
+<div class="contact-container">
+    <div class="contact-img">
+        <img src="images/contact.svg" alt="Contact">
+    </div>
+    <div class="contact-form">
     <?php
-    if (!empty($_SESSION["error"])) {
-        var_dump($_SESSION["error"]);
-        unset($_SESSION["error"]);
-    }
+            if (!empty($_SESSION["error"])) {
+                echo "<p class='error'>" . $_SESSION["error"][0] . "</p>";
+                unset($_SESSION["error"]);
+            }
 
-    if (!empty($_SESSION["validate"])) {
-        var_dump($_SESSION["validate"]);
-        unset($_SESSION["validate"]);
-    }
-    ?>
+            if (!empty($_SESSION["validate"])) {
+                echo "<p class='valid'>" . $_SESSION["validate"][0] . "</p>";
+                unset($_SESSION["validate"]);
+            }
+            ?>
+        <form action="" method="post">
 
+            <div>
+                <input type="text" name="name" placeholder="Nom, Prénom">
+            </div>
+            <div>
+                <input type="email" name="email" placeholder="Email" value="<?= $_SESSION['user']['email'] ?>">
+            </div>
+            <div>
+                <input type="text" name="subject" placeholder="Objet">
+            </div>
+            <div>
+                <textarea rows="3" name="message" placeholder="Message"></textarea>
+            </div>
+            <div>
+                <button type="submit">Valider</button>
+            </div>
+
+        </form>
+    </div>
+</div>
 
 <?php
 require('includes/footer.php');

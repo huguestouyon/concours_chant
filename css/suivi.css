@@ -4,7 +4,7 @@
 }
 .thecontainer{
     background-color: #EEEEEE;
-    height: 100vh;
+   
     display: flex;
     justify-content: center;
 }
@@ -51,4 +51,363 @@
 }
 .sousbar1{
     background-color: #85339B;
+}
+.jury{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0 5vh 0 5vh;
+    padding-bottom: 8vh;
+    
+}
+.juryPerson{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.imgText{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0 5vh 0 5vh;
+
+}
+.imgText img{
+    height: 25vh;
+}
+.imgText p {
+    height: 100%;
+    width: 35vw;
+    
+    padding: 5vh;
+}
+h2{
+    text-align: center;
+    padding: 7vh;
+}
+.juryPerson img{
+    height: 15vh;
+}
+.juryPerson p {
+    font-weight: 600;
+    margin-top: 2vh;
+}
+
+.containerMonSuivi{
+    min-height: 90vh;
+    background-color: #EEEEEE;
+}
+.thecontainerMonSuivi{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #EEEEEE;
+    margin-top: 8vh;
+}
+.choseSong{
+    height: 28vh;
+    width: 40vw;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 30px;
+}
+.inForm{
+    display: flex;
+    flex-direction: column;
+}
+.secondForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.inForm div input{
+    width: 30vw;
+    height: 4vh;
+    border-radius: 20px;
+    border: none;
+    background-color: #dedede;
+    margin-top: 1vh;
+    text-align: center;
+}
+.inForm div button{
+    background-color: #85339B;
+    width: 3vw;
+    height: 4vh;
+    border-radius: 15px;
+    border: none;
+}
+.maGlass{
+    color: white;
+    
+}
+select{
+    width: 33.5vw;
+    height: 4vh;
+    border-radius: 20px;
+    border: none;
+    background-color: #dedede;
+    margin-top: 1vh;
+    text-align: center;
+}
+label{
+    font-size: 14px;
+    margin-top: 1vh;
+    font-weight: 600;
+}
+.buttonEnvoyer button{
+    margin-top: 3vh;
+    width: 7vw;
+    height: 3.5vh;
+    border-radius: 40px;
+    background-color: #85339B;
+    color: white;
+    border: none;
+}
+.buttonEnvoyer{
+    display: flex;
+    justify-content: center;
+}
+#fichier{
+ background-color:#dedede;
+    color:black;
+    border:none;
+    padding:5px;
+    border-radius:20px;
+    margin:1vh;
+  }
+ .formUpload{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+ }
+
+ .formUpload input{
+    margin-top: 3vh;
+ }
+ .formUpload button{
+    margin-top: 4vh;
+    margin-top: 3vh;
+    width: 7vw;
+    height: 3.5vh;
+    border-radius: 40px;
+    background-color: #85339B;
+    color: white;
+    border: none;
+ }
+ .choseSong p{
+    font-weight: 600;
+ }
+
+
+ @media (max-width: 1000px) { 
+    .rond{
+        height: 5vh;
+        width: 5vh;
+        border-radius: 60%;
+        z-index: 2;
+    }
+    .middle{
+        height: 1.5vh;
+        width: 17vh;
+        z-index: 0;
+    }
+    .sousbar{
+        height: 1.5vh;
+        width: 50%;
+        
+        z-index: 1;
+    }
+  
+}
+@media (max-width: 900px) { 
+    .imgText p{
+        font-size: 14px;
+    }
+    .imgText img{
+        height: 20vh;
+    }
+    .juryPerson img{
+        height: 12vh;
+    }
+    .juryPerson p {
+        font-size: 14px;
+    }
+    .thecontainerMonSuivi div img{
+        height: 20vh;
+        
+    }
+    .buttonEnvoyer button{
+        width: 15vw;
+    }
+  
+}
+@media (max-width: 650px) { 
+    .imgText{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .imgText p{
+        font-size: 14px;
+        margin-top: 5vh;
+        width: 80%;
+    }
+    .imgText img{
+        height: 17vh;
+    }
+    .juryPerson img{
+        height: 11vh;
+        margin-top: 3vh;
+    }
+    .juryPerson p {
+        font-size: 13px;
+    }
+    .thecontainerMonSuivi{
+        flex-direction: column-reverse;
+    }
+    .thecontainerMonSuivi div img{
+        display: none;
+        
+    }
+    .jury{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .choseSong{
+        width: 80vw;
+    }
+    .inForm div input{
+        width: 55vw;
+  
+        margin-top: 2vh;
+    }
+    select{
+        width: 63.5vw;
+  
+        margin-top: 2vh;
+    }
+    .buttonEnvoyer button{
+        width: 20vw;
+    }
+    .inForm div button{
+        background-color: #85339B;
+        width: 8vw;
+
+    }
+    .rond{
+        height: 5vh;
+        width: 5vh;
+        
+        border-radius: 60%;
+        z-index: 2;
+    }
+    .middle{
+        height: 1vh;
+        width: 13vh;
+        
+        z-index: 0;
+    }
+    .sousbar{
+        height: 1vh;
+        width: 50%;
+        
+        z-index: 1;
+    }
+}
+@media (max-width: 550px) { 
+    .imgText{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .imgText p{
+        font-size: 14px;
+        margin-top: 5vh;
+        width: 80%;
+    }
+    .imgText img{
+        height: 17vh;
+    }
+    
+    .juryPerson img{
+        height: 11vh;
+        margin-top: 3vh;
+    }
+    .juryPerson p {
+        font-size: 13px;
+        text-align: center;
+    }
+    .rond{
+        height: 4vh;
+        width: 4vh;
+       
+        border-radius: 60%;
+        z-index: 2;
+    }
+    .middle{
+        height: 1vh;
+        width: 7vh;
+       
+        z-index: 0;
+    }
+    .sousbar{
+        height: 1vh;
+        width: 50%;
+        
+        z-index: 1;
+    }
+}
+@media (max-width: 350px) { 
+    .imgText{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .imgText p{
+        font-size: 14px;
+        margin-top: 5vh;
+        width: 90%;
+    }
+    .imgText img{
+        height: 17vh;
+    }
+    .jury{
+        display: flex;
+        flex-direction: column;
+    }
+    .juryPerson img{
+        height: 11vh;
+        margin-top: 3vh;
+    }
+    .juryPerson p {
+        font-size: 13px;
+        text-align: center;
+    }
+    .choseSong{
+        width: 90vw;
+    }
+    .inForm div input{
+        width: 58vw;
+  
+        margin-top: 2vh;
+    }
+    select{
+        width: 68.5vw;
+  
+        margin-top: 2vh;
+    }
+    .buttonEnvoyer button{
+        width: 23vw;
+    }
+    .inForm div button{
+        background-color: #85339B;
+        width: 10vw;
+
+    }
 }

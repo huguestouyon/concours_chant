@@ -1,6 +1,6 @@
 <?php
 session_start();
-$title = "responsable";
+$title = "Responsable";
 error_reporting(E_ALL);
 ini_set("display_errors",1);
 include "includes/fonction.php";
@@ -63,7 +63,7 @@ include "includes/header.php";
 
 ?>
 
-<form action="" method="post">
+<!-- <form action="" method="post">
     <div>
         <input type="text" name="name" placeholder="Nom">
     </div>
@@ -79,7 +79,53 @@ include "includes/header.php";
     <div>
         <button type="submit">Enregistrement</button>
     </div>   
-</form>
+</form> -->
+
+
+
+<section class="vh-100">
+        <div class="container py-5 h-100">
+          <div class="d-flex align-items-center justify-content-center h-100 flex-row-reverse">
+            <div class="col-md-8 col-lg-7 col-xl-6 d-flex justify-content-center flex-wrap-nowrap">
+              <img src="images/responsable.svg" class="img-fluid" alt="Phone image">
+            </div>
+            <div class="select_all col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                <div class="test w-100" style="margin-top:0;">
+                    <form action="" method="post">
+                        <h1 class="titre-page mb-5 ms-3">Responsable Légal</h1>
+
+                        <div class="name input-group mb-3">
+                          <span class="input-group-text" id="basic-addon1"><img src="images/avatar.svg" alt="" srcset=""></span>
+                          <input type="text" name="name" class="form-control" placeholder="Nom" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+
+                        <div class="surname input-group mb-3">
+                          <span class="input-group-text" id="basic-addon1"><img src="images/avatar.svg" alt="" srcset=""></span>
+                          <input type="text" name="surname" class="form-control" placeholder="Prénom" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+
+                        <div class="email input-group mb-3">
+                          <span class="input-group-text" id="basic-addon1"><img src="images/email.svg" alt="" srcset=""></span>
+                          <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+
+                        <div class="date input-group mb-3">
+                          <span class="input-group-text" id="basic-addon1"><img src="images/date.svg" alt="" srcset=""></span>
+                          <input type="date" name="birthday" value="2000-01-01" class="form-control" placeholder="Date de naissance" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                 
+                        <button type="submit" class="btn btn-primary btn-sm btn-block float-end">Enregistrement</button>
+
+                    </form>
+                </div>     
+            </div>         
+          </div>
+        </div>
+      </section>
+
+
+
+
 
 </body>
 </html>

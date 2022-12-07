@@ -52,6 +52,7 @@ if (!empty($_POST)) {
             $query->bindValue(":email", $_POST["email"], PDO::PARAM_STR);
             $query->execute();
             $verifEmail = $query->fetch();
+            
             if($verifEmail){
                 $_SESSION["error"][] = "email deja existante";
             }
@@ -71,8 +72,7 @@ if (!empty($_POST)) {
                     "name" => $_POST["name"],
                     "email" => $_POST["email"],
                     "birthday" => $_POST["birthday"],
-                    "age" => $age
-                    
+                    "age" => $age 
                 ];
                 if ($age < 18) {
                     header("Location: responsable.php");
@@ -95,7 +95,7 @@ if (!empty($_POST)) {
 $title = "Inscription";
 require('includes/header.php');
 ?>
-
+<!--
 <form action="" method="post">
     <div>
         <input type="text" placeholder="Nom" name="name">
@@ -103,14 +103,16 @@ require('includes/header.php');
     <div>
         <input type="text" placeholder="Prénom" name="surname">
     </div>
-    <div>
-        <input type="email" placeholder="Email" name="email">
+    <div class="email input-group mb-3">
+        <span class="input-group-text" id="basic-addon1"><img src="images/email.svg" alt="" srcset=""></span>
+        <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
     </div>
     <div>
         <input type="date" value="2000-01-01" placeholder="Date de naissance" name="birthday">
     </div>
-    <div>
-        <input type="password" placeholder="Mot de passe" name="pass">
+    <div class="pass input-group mb-3">
+        <span class="input-group-text" id="basic-addon1"><img src="images/mdp.svg" alt="" srcset=""></span>
+        <input type="password" name="pass" class="form-control" placeholder="Mot de passe" aria-label="Username" aria-describedby="basic-addon1">
     </div>
     <div>
         <input type="password" placeholder="Confirmation mot de passe" name="pass2">
@@ -119,6 +121,61 @@ require('includes/header.php');
         <button type="submit">Enregistrement</button>
     </div>
 </form>
+-->
+<section class="vh-100">
+        <div class="container py-5 h-100">
+          <div class="d-flex justify-content-center flex-row-reverse">
+            <div class="col-md-8 col-lg-7 col-xl-6 d-flex justify-content-center flex-wrap-nowrap">
+              <img src="images/inscription.svg" class="img-fluid" alt="Phone image">
+            </div>
+            <div class="select_all col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                <div class="test w-100">
+                    <form action="" method="post">
+                        <h1 class="mb-5 ms-3"  style="font-size: 30px; font-weight:bold;">Inscription</h1>
+
+                        <div class="name input-group mb-3">
+                          <span class="input-group-text" id="basic-addon1"><img src="images/avatar.svg" alt="" srcset=""></span>
+                          <input type="text" name="name" class="form-control" placeholder="Nom" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+
+                        <div class="surname input-group mb-3">
+                          <span class="input-group-text" id="basic-addon1"><img src="images/avatar.svg" alt="" srcset=""></span>
+                          <input type="text" name="surname" class="form-control" placeholder="Prénom" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+
+                        <div class="email input-group mb-3">
+                          <span class="input-group-text" id="basic-addon1"><img src="images/email.svg" alt="" srcset=""></span>
+                          <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+
+                        <div class="date input-group mb-3">
+                          <span class="input-group-text" id="basic-addon1"><img src="images/date.svg" alt="" srcset=""></span>
+                          <input type="date" name="birthday" value="2000-01-01" class="form-control" placeholder="Date de naissance" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+
+                        <div class="pass input-group mb-3">
+                          <span class="input-group-text" id="basic-addon1"><img src="images/mdp.svg" alt="" srcset=""></span>
+                          <input type="password" name="pass" class="form-control" placeholder="Mot de passe" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+
+                        <div class="pass2 input-group mb-3">
+                          <span class="input-group-text" id="basic-addon1"><img src="images/mdp.svg" alt="" srcset=""></span>
+                          <input type="password" name="pass2" class="form-control" placeholder="Confirmation mot de passe" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+
+                        
+                        <button type="submit" class="btn btn-primary btn-sm btn-block float-end">Enregistrement</button>
+
+                    </form>
+                </div>  
+                <div class="btn-inscription divider d-flex align-items-center text-center my-0">
+                    <p>Vous avez un compte ?</p>
+                    <a href="connexion.php"><button  type="submit" class="btn sign-in btn-primary btn-sm" >Connectez-vous ici</button></a>     
+                </div>     
+            </div>         
+          </div>
+        </div>
+      </section>
 
 
 <?php
@@ -128,3 +185,5 @@ if (!empty($_SESSION["error"])) {
 }
 
 ?>
+</body>
+</html>

@@ -16,8 +16,11 @@
     align-items: center;
     justify-content: space-between;
     height: 7vh;
+    
 }
-
+.nav-menu{
+    z-index: 999;
+}
 nav ul li a:hover, .color-link:hover{
     color: #85339b!important;
 }
@@ -49,6 +52,7 @@ nav ul{
 .responsive{
     display: none;
 }
+
 footer{
     position: fixed;
     width: 100%;
