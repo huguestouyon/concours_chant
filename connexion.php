@@ -155,7 +155,7 @@ require('includes/header.php');
 
 <?php
 if (!empty($_SESSION["error"])) {
-    var_dump($_SESSION);
+    echo '<p>'.$_SESSION["error"][0].'</p>';
     unset($_SESSION["error"]);
 }
 

@@ -11,7 +11,7 @@ if (empty($verifid)) {
     header('Location: api.php');
  }
 
- if (isset($_FILES["music"]) && $_FILES["music"]["error"] === 0 && !empty($_POST)) {
+ if (isset($_FILES["music"]) && $_FILES["music"]["error"] === 0) {
     $type = [
         "mp3" => "audio/mpeg",
         "oga" => "audio/ogg",
@@ -32,7 +32,7 @@ if (empty($verifid)) {
 
     // Récupérer l'extension
     $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-
+    var_dump($extension);
     // Vérifier l'absence de l'extension / type MIME dans les valeurs
     if (!array_key_exists($extension, $type) || !in_array($filetype, $type)) {
         // Extension ou type MIME incorrect
@@ -53,15 +53,20 @@ if (empty($verifid)) {
     // On génère le chemin complet
     //echo __DIR__;
     $newfilename = __DIR__ . "/uploads/$newname.$extension";
-    
+    echo $newfilename;
 
     if (!move_uploaded_file($_FILES["music"]["tmp_name"], $newfilename)) {
         $_SESSION["error"] = ["Échec de l'upload"];
         //exit; // équivalent à die;
     }
-    include "includes/connexionbdd.php";
-
+    $sql = "UPDATE `validation` SET `localisation_track`=:track WHERE `id_user`= :id";
+    $query = $db->prepare($sql);
+    $query->bindValue(":track", "uploads/$newname.$extension", PDO::PARAM_STR);
+    $query->bindValue(":id", $_SESSION["user"]["id"], PDO::PARAM_STR);
+    $query->execute();
     header('Location: suivi.php');
+
+   
     
 }
 
@@ -109,6 +114,12 @@ include('includes/navbar.php');
             <p>Titre Validé</p>
 
         </div>
+        <?php
+        if(isset($_SESSION["error"])){
+            var_dump($_SESSION["error"]);
+            unset($_SESSION["error"]);
+        }
+        ?>
     </div>
 </div>
 </div>
@@ -121,9 +132,6 @@ include('includes/navbar.php');
     rond2.style.background = "#85339b";
 </script>
 <?php
-if(isset($_SESSION["error"])){
-    var_dump($_SESSION["error"]);
-    unset($_SESSION["error"]);
-}
+
 include('includes/footer.php');
 ?>
