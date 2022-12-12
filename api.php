@@ -20,8 +20,7 @@ $query->bindValue(":id", $_SESSION["user"]["id"], PDO::PARAM_STR);
 $query->execute();
 $verifid = $query->fetch();
 
-
-if (!empty($verifid) && $verifid['title_chosen'] != '0') {
+if (!empty($verifid) && $verifid['title_chosen'] !== '0') {
     header('Location: suivi.php');
  }else{
 
@@ -50,11 +49,6 @@ $err = curl_error($curl);
 
 curl_close($curl);
 
-
-
-if ($err) {
-	echo "cURL Error #:" . $err;
-}
 
 }
 
@@ -154,7 +148,6 @@ for ($a=0; $a < 4; $a++) {
             echo "<option value=".$value.">".$parsee['tracks']['hits'][$i]['track']['title']." par ".$parsee['tracks']['hits'][$i]['track']['subtitle']."</option>";
                 }
         }
-    
    
     ?>
 </select>
@@ -163,6 +156,9 @@ for ($a=0; $a < 4; $a++) {
 </div>
 </form>
 <?php
+if ($err) {
+	echo "cURL Error #:" . $err;
+}
 if(isset($_SESSION["error"])){
     echo '<p>'.$_SESSION["error"][0].'</p>';
     unset($_SESSION["error"]);

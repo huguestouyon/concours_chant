@@ -7,9 +7,25 @@ $query->bindValue(":id", $_SESSION["user"]["id"], PDO::PARAM_STR);
 $query->execute();
 $verifid = $query->fetch();
 
+
 if (empty($verifid)) {
     header('Location: api.php');
  }
+elseif ($verifid['title_chosen'] === '0') {
+    header('Location: api.php');
+ }
+
+if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 0 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] === NULL ) {
+    header("Location: suiviupload.php");
+}
+
+if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 0 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] !== NULL ) {
+    header("Location: suivison.php");
+}
+
+if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 1 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] !== NULL ) {
+    header("Location: suivicheque.php");
+}
 
  if (isset($_FILES["music"]) && $_FILES["music"]["error"] === 0) {
     $type = [
@@ -64,10 +80,8 @@ if (empty($verifid)) {
     $query->bindValue(":track", "uploads/$newname.$extension", PDO::PARAM_STR);
     $query->bindValue(":id", $_SESSION["user"]["id"], PDO::PARAM_STR);
     $query->execute();
-    header('Location: suivi.php');
-
-   
-    
+    header('Location: suivicheque.php');
+ 
 }
 
 include('includes/header.php');

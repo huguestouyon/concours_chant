@@ -120,16 +120,30 @@ require('includes/header.php');
     <div>
         <button type="submit">Enregistrement</button>
     </div>
+    
 </form>
 -->
-<section class="vh-100">
-        <div class="container py-5 h-100">
-          <div class="d-flex justify-content-center flex-row-reverse">
-            <div class="col-md-8 col-lg-7 col-xl-6 d-flex justify-content-center flex-wrap-nowrap">
+
+<style>
+    @media (min-width: 765px) and (max-width: 990px) { 
+        .d-flex.justify-content-center.flex-row-reverse.h-100 {
+
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    }
+
+</style>
+
+<section class="vh-50">
+        <div class="container py-3 h-100">
+          <div class="d-flex justify-content-center flex-row-reverse h-100">
+            <div class="col-md-8 col-lg-7 col-xl-6 d-flex justify-content-center flex-wrap-wrap">
               <img src="images/inscription.svg" class="img-fluid" alt="Phone image">
             </div>
             <div class="select_all col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                <div class="test w-100">
+                <div class="test w-75">
                     <form action="" method="post">
                         <h1 class="mb-5 ms-3"  style="font-size: 30px; font-weight:bold;">Inscription</h1>
 

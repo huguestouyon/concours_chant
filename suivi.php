@@ -9,19 +9,24 @@ $query->bindValue(":id", $_SESSION["user"]["id"], PDO::PARAM_STR);
 $query->execute();
 $verifid = $query->fetch();
 
-
 if (empty($verifid)) {
     header('Location: api.php');
  }
 elseif ($verifid['title_chosen'] === '0') {
-     header('Location: api.php');
+    header('Location: api.php');
  }
 
-if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 0 && $verifid['title_validate'] === 1 && $verifid['location_track'] === NULL ) {
+if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 0 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] === NULL ) {
     header("Location: suiviupload.php");
 }
 
+if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 0 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] !== NULL ) {
+    header("Location: suivison.php");
+}
 
+if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 1 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] !== NULL ) {
+    header("Location: suivicheque.php");
+}
 
 include('includes/header.php');
 include('includes/navbar.php');

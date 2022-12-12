@@ -105,9 +105,19 @@ require('includes/header.php');
 
 -->
 
+<style>
+    @media (min-width: 765px) and (max-width: 990px) { 
+
+        .col-md-8.col-lg-7.col-xl-6.d-flex.justify-content-center.flex-wrap-nowrap{
+            display: none !important;
+        }
+    
+    }
+</style>
+
 <section class="vh-100">
         <div class="container py-5 h-100">
-          <div class="row d-flex align-items-center justify-content-center h-100">
+          <div class="row d-flex align-items-center justify-content-center py-5">
             <div class="col-md-8 col-lg-7 col-xl-6">
               <img src="images/img_connexion.svg" class="img-fluid" alt="Phone image">
             </div>

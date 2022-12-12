@@ -81,10 +81,25 @@ include "includes/header.php";
     </div>   
 </form> -->
 
+<style>
+    @media (min-width: 765px) and (max-width: 990px) { 
+        .d-flex.justify-content-center.flex-row-reverse.h-100 {
 
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            height: 50vh;
+        }
+
+        .col-md-8.col-lg-7.col-xl-6.d-flex.justify-content-center.flex-wrap-nowrap{
+            display: none !important;
+        }
+    
+    }
+</style>
 
 <section class="vh-100">
-        <div class="container py-5 h-100">
+        <div class="container py-3 h-100">
           <div class="d-flex align-items-center justify-content-center h-100 flex-row-reverse">
             <div class="col-md-8 col-lg-7 col-xl-6 d-flex justify-content-center flex-wrap-nowrap">
               <img src="images/responsable.svg" class="img-fluid" alt="Phone image">
