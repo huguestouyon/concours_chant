@@ -200,6 +200,13 @@ label{
  .choseSong p{
     font-weight: 600;
  }
+ .adressForm{
+    display: flex;
+    flex-direction: column;
+ }
+ .adressForm button{
+    width: 50%;
+ }
 
 
  @media (max-width: 1000px) { 

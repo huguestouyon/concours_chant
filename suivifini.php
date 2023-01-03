@@ -1,8 +1,47 @@
 <?php
 session_start();
+include('includes/connexionbdd.php');
+$sql = "SELECT * FROM `validation` WHERE `id_user` = :id";
+$query = $db->prepare($sql);
+$query->bindValue(":id", $_SESSION["user"]["id"], PDO::PARAM_STR);
+$query->execute();
+$verifid = $query->fetch();
+
+if (empty($verifid)) {
+    header('Location: api.php');
+ }
+elseif ($verifid['title_chosen'] === '0') {
+    header('Location: api.php');
+ }
+
+ if (empty($verifid)) {
+    header('Location: api.php');
+ }
+elseif ($verifid['title_chosen'] === '0') {
+    header('Location: api.php');
+}
+
+ if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 0 && $verifid['title_validate'] === 0 && $verifid['localisation_track'] === NULL ) {
+    header("Location: suivi.php");
+}
+
+if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 0 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] === NULL ) {
+    header("Location: suiviupload.php");
+}
+
+if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 0 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] !== NULL ) {
+    header("Location: suivison.php");
+}
+
+if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 1 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] !== NULL ) {
+    header("Location: suivicheque.php");
+}
+
 
 include('includes/header.php');
 include('includes/navbar.php');
+
+
 ?>
 
 
@@ -17,6 +56,7 @@ include('includes/navbar.php');
         <form class="formUpload" action="" method="post" enctype="multipart/form-data">
       
             <label for="fichier">Inscription terminée ! Télécharger la facture ci-dessous.</label>
+            <a class="factureDl" href="facture.php" download="facture">ici</a>
         
     </form>
     </div>
@@ -44,12 +84,7 @@ include('includes/navbar.php');
             <p>Chèque Validé</p>
 
         </div>
-        <?php
-        if(isset($_SESSION["error"])){
-            var_dump($_SESSION["error"]);
-            unset($_SESSION["error"]);
-        }
-        ?>
+        
     </div>
 </div>
 </div>

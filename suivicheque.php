@@ -7,12 +7,17 @@ $query->bindValue(":id", $_SESSION["user"]["id"], PDO::PARAM_STR);
 $query->execute();
 $verifid = $query->fetch();
 
+
 if (empty($verifid)) {
     header('Location: api.php');
  }
 elseif ($verifid['title_chosen'] === '0') {
     header('Location: api.php');
- }
+}
+
+ if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 0 && $verifid['title_validate'] === 0 && $verifid['localisation_track'] === NULL ) {
+    header("Location: suivi.php");
+}
 
 if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 0 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] === NULL ) {
     header("Location: suiviupload.php");
@@ -20,10 +25,6 @@ if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 0 && $verifid['ti
 
 if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 0 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] !== NULL ) {
     header("Location: suivison.php");
-}
-
-if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 1 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] !== NULL ) {
-    header("Location: suivicheque.php");
 }
 
 if ($verifid['cheque'] === 1 && $verifid['track_validate'] === 1 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] !== NULL ) {
@@ -46,10 +47,11 @@ include('includes/navbar.php');
         <img src="images/Group 1.svg" alt="illustration">
     </div>
     <div class="choseSong">
+        
         <form class="formUpload" action="" method="post" enctype="multipart/form-data">
       
             <label for="fichier">En attente de validation de votre cheque... + adresse </label>
-        
+            <a href="images/cheque.png" style="margin-top: 1vh;">Exemple de chêque</a>
     </form>
     </div>
 </div>
@@ -76,12 +78,6 @@ include('includes/navbar.php');
             <p>Titre Validé</p>
 
         </div>
-        <?php
-        if(isset($_SESSION["error"])){
-            var_dump($_SESSION["error"]);
-            unset($_SESSION["error"]);
-        }
-        ?>
     </div>
 </div>
 </div>

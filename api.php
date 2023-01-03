@@ -9,9 +9,27 @@ if (isset($_SESSION["LAST_ACTIVITY"]) && time() - $_SESSION["LAST_ACTIVITY"] > 1
 }
 $_SESSION["LAST_ACTIVITY"] = time();
 
+
+
+
 $title = 'Mon suivi';
 
 require "includes/connexionbdd.php";
+
+
+$sql = "SELECT count(*) as count FROM `representantlegal` WHERE id_user = :id";
+$query = $db->prepare($sql);
+$query->bindValue(":id", $_SESSION["user"]["id"], PDO::PARAM_STR);
+$query->execute();
+$data = $query->fetch();
+
+$dateToday = date("Y-m-d");
+$age = date_diff(date_create($_SESSION["user"]["birthday"]), date_create($dateToday));
+$age = $age->format('%y');
+
+if($age >= 14 && $age < 18 && $data["count"] === 0){
+    header("Location: responsable.php");
+}
 
 
 $sql = "SELECT * FROM `validation` WHERE `id_user` = :id";
@@ -39,7 +57,7 @@ curl_setopt_array($curl, [
 	CURLOPT_CUSTOMREQUEST => "GET",
 	CURLOPT_HTTPHEADER => [
 		"X-RapidAPI-Host: shazam.p.rapidapi.com",
-		"X-RapidAPI-Key: 501264117fmsh6e9151960cef39fp17b375jsn8f757604d258"
+		"X-RapidAPI-Key: ed3ed5bec9mshcb4fa77058cfd9ep1fbc89jsn771de5eb28e9"
 	],
 ]);
 
@@ -160,7 +178,7 @@ if ($err) {
 	echo "cURL Error #:" . $err;
 }
 if(isset($_SESSION["error"])){
-    echo '<p>'.$_SESSION["error"][0].'</p>';
+    echo '<br><p>'.$_SESSION["error"][0].'</p>';
     unset($_SESSION["error"]);
 }
 ?>

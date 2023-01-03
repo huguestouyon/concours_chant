@@ -8,8 +8,18 @@ if (!isset($_SESSION["user"])) {
     header("Location: connexion.php");
     exit;
 }
+require_once "includes/connexionbdd.php";
+$sql = "SELECT count(*) as count FROM representantlegal WHERE id_user = :id";
+$query = $db->prepare($sql);
+$query->bindValue(":id", $_SESSION["user"]["id"], PDO::PARAM_STR);
+$query->execute();
+$data = $query->fetch();
 
-if (isset($_SESSION["user"]["age"]) && $_SESSION["user"]["age"] >= 14 && $_SESSION["user"]["age"] < 18) {
+$dateToday = date("Y-m-d");
+$age = date_diff(date_create($_SESSION["user"]["birthday"]), date_create($dateToday));
+$age = $age->format('%y');
+
+if ($age >= 14 && $age < 18 && $data["count"] === 0) {
     if (!empty($_POST)) {
 
         # le submit est envoyé
@@ -63,24 +73,6 @@ include "includes/header.php";
 
 ?>
 
-<!-- <form action="" method="post">
-    <div>
-        <input type="text" name="name" placeholder="Nom">
-    </div>
-    <div>
-        <input type="text" name="surname" placeholder="Prénom">
-    </div>
-    <div>
-        <input type="email" name="email" placeholder="Email">
-    </div>
-    <div>
-        <input type="date" name="birthday">
-    </div>
-    <div>
-        <button type="submit">Enregistrement</button>
-    </div>   
-</form> -->
-
 <style>
     @media (min-width: 765px) and (max-width: 990px) { 
         .d-flex.justify-content-center.flex-row-reverse.h-100 {
@@ -97,6 +89,18 @@ include "includes/header.php";
     
     }
 </style>
+<?php 
+if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
+    ?>
+    
+    <div class="alert alert-danger" role="alert" >
+        <?= $_SESSION['error'][0] ?>
+    </div>
+
+<?php 
+unset($_SESSION['error']);  
+}
+?>
 
 <section class="vh-100">
         <div class="container py-3 h-100">

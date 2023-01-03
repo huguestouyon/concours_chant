@@ -37,9 +37,40 @@ if (!empty($_POST)) {
             $_SESSION['error'][] = "Il faut plus de 14 ans";
         }
         
-        if (strlen($_POST["pass"] < 5)) {
+        if (strlen($_POST["pass"]) < 5) {
             $_SESSION['error'][] = "Mot de passe trop court";
         }
+
+        if (strlen($_POST["name"]) > 50) {
+            $_SESSION['error'][] = "Nom trop long";
+        }
+
+        if (strlen($_POST["surname"]) > 50) {
+            $_SESSION['error'][] = "Prénom trop long";
+        }
+
+        if (strlen($_POST["email"]) > 50) {
+            $_SESSION['error'][] = "Email trop long";
+        }
+
+    
+
+        if (strlen($_POST["pass"]) < 5) {
+            $_SESSION['error'][] = "Mot de passe trop court";
+        }
+
+        if (strlen($_POST["name"]) < 1) {
+            $_SESSION['error'][] = "Nom trop court";
+        }
+
+        if (strlen($_POST["surname"]) < 1) {
+            $_SESSION['error'][] = "Prénom trop court";
+        }
+
+        if (strlen($_POST["email"]) < 5) {
+            $_SESSION['error'][] = "Email trop court";
+        }
+        
         if($_POST["pass"] !== $_POST["pass2"]){
             $_SESSION['error'][] = "Les mots de passe ne sont pas identiques";
         }
@@ -71,8 +102,8 @@ if (!empty($_POST)) {
                     "surname" => $_POST["surname"],
                     "name" => $_POST["name"],
                     "email" => $_POST["email"],
-                    "birthday" => $_POST["birthday"],
-                    "age" => $age 
+                    "birthday" => $_POST["birthday"]
+                    // "age" => $age 
                 ];
                 if ($age < 18) {
                     header("Location: responsable.php");
@@ -81,7 +112,6 @@ if (!empty($_POST)) {
                     header("Location: index.php");
                 }
             }
-
         }
        
     }
@@ -95,34 +125,6 @@ if (!empty($_POST)) {
 $title = "Inscription";
 require('includes/header.php');
 ?>
-<!--
-<form action="" method="post">
-    <div>
-        <input type="text" placeholder="Nom" name="name">
-    </div>
-    <div>
-        <input type="text" placeholder="Prénom" name="surname">
-    </div>
-    <div class="email input-group mb-3">
-        <span class="input-group-text" id="basic-addon1"><img src="images/email.svg" alt="" srcset=""></span>
-        <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
-    </div>
-    <div>
-        <input type="date" value="2000-01-01" placeholder="Date de naissance" name="birthday">
-    </div>
-    <div class="pass input-group mb-3">
-        <span class="input-group-text" id="basic-addon1"><img src="images/mdp.svg" alt="" srcset=""></span>
-        <input type="password" name="pass" class="form-control" placeholder="Mot de passe" aria-label="Username" aria-describedby="basic-addon1">
-    </div>
-    <div>
-        <input type="password" placeholder="Confirmation mot de passe" name="pass2">
-    </div>
-    <div>
-        <button type="submit">Enregistrement</button>
-    </div>
-    
-</form>
--->
 
 <style>
     @media (min-width: 765px) and (max-width: 990px) { 
@@ -135,7 +137,18 @@ require('includes/header.php');
     }
 
 </style>
+<?php 
+if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
+    ?>
+    
+    <div class="alert alert-danger" role="alert" >
+        <?= $_SESSION['error'][0];?>
+    </div>
 
+<?php 
+unset($_SESSION['error']);  
+}
+?>
 <section class="vh-50">
         <div class="container py-3 h-100">
           <div class="d-flex justify-content-center flex-row-reverse h-100">
@@ -149,32 +162,32 @@ require('includes/header.php');
 
                         <div class="name input-group mb-3">
                           <span class="input-group-text" id="basic-addon1"><img src="images/avatar.svg" alt="" srcset=""></span>
-                          <input type="text" name="name" class="form-control" placeholder="Nom" aria-label="Username" aria-describedby="basic-addon1">
+                          <input type="text" name="name" class="form-control" placeholder="Nom" aria-label="Username" aria-describedby="basic-addon1" required>
                         </div>
 
                         <div class="surname input-group mb-3">
                           <span class="input-group-text" id="basic-addon1"><img src="images/avatar.svg" alt="" srcset=""></span>
-                          <input type="text" name="surname" class="form-control" placeholder="Prénom" aria-label="Username" aria-describedby="basic-addon1">
+                          <input type="text" name="surname" class="form-control" placeholder="Prénom" aria-label="Username" aria-describedby="basic-addon1" required>
                         </div>
 
                         <div class="email input-group mb-3">
                           <span class="input-group-text" id="basic-addon1"><img src="images/email.svg" alt="" srcset=""></span>
-                          <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1">
+                          <input type="email" name="email" class="form-control" placeholder="Email" aria-label="Username" aria-describedby="basic-addon1" required>
                         </div>
 
                         <div class="date input-group mb-3">
                           <span class="input-group-text" id="basic-addon1"><img src="images/date.svg" alt="" srcset=""></span>
-                          <input type="date" name="birthday" value="2000-01-01" class="form-control" placeholder="Date de naissance" aria-label="Username" aria-describedby="basic-addon1">
+                          <input type="date" name="birthday" value="2000-01-01" class="form-control" placeholder="Date de naissance" aria-label="Username" aria-describedby="basic-addon1" required>
                         </div>
 
                         <div class="pass input-group mb-3">
                           <span class="input-group-text" id="basic-addon1"><img src="images/mdp.svg" alt="" srcset=""></span>
-                          <input type="password" name="pass" class="form-control" placeholder="Mot de passe" aria-label="Username" aria-describedby="basic-addon1">
+                          <input type="password" name="pass" class="form-control" placeholder="Mot de passe" aria-label="Username" aria-describedby="basic-addon1" required>
                         </div>
 
                         <div class="pass2 input-group mb-3">
                           <span class="input-group-text" id="basic-addon1"><img src="images/mdp.svg" alt="" srcset=""></span>
-                          <input type="password" name="pass2" class="form-control" placeholder="Confirmation mot de passe" aria-label="Username" aria-describedby="basic-addon1">
+                          <input type="password" name="pass2" class="form-control" placeholder="Confirmation mot de passe" aria-label="Username" aria-describedby="basic-addon1" required>
                         </div>
 
                         
@@ -191,13 +204,5 @@ require('includes/header.php');
         </div>
       </section>
 
-
-<?php
-if (!empty($_SESSION["error"])) {
-    var_dump($_SESSION);
-    unset($_SESSION["error"]);
-}
-
-?>
 </body>
 </html>

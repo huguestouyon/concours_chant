@@ -7,12 +7,27 @@ if (!isset($_SESSION["user"]) || !isset($_SESSION['user']['admin'])) {
   exit;
 }
 
+// Déconnexion a 30min d'innactivité
+if (isset($_SESSION["LAST_ACTIVITY"]) && time() - $_SESSION["LAST_ACTIVITY"] > 1800) {
+  header("Location: deconnexion.php");
+}
 
 $title = "Admin";
 require_once "includes/header.php";
 require_once "includes/navbar.php";
 ?>
+<?php 
+if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
+    ?>
+    
+    <div class="alert alert-danger" role="alert" >
+        <?= $_SESSION['error'];?>
+    </div>
 
+<?php 
+unset($_SESSION['error']);  
+}
+?>
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <div class="me-2 float-end">
@@ -55,7 +70,7 @@ require_once "includes/navbar.php";
           <?php
           require_once "includes/connexionbdd.php";
           //$sql = "SELECT user.id as id, surname, `name`, email, birthday, register_date, title_chosen, title_validate, localisation_track, cheque, track_validate FROM `user` INNER JOIN validation ON user.id = validation.id_user ORDER BY user.id";
-          $sql = "SELECT user.id as id, user.surname as surname, user.name as name, user.email as email, user.birthday as birthday, register_date, title_chosen, title_validate, localisation_track, cheque, track_validate, representantlegal.name as rlname, representantlegal.surname as rlsurname, title, artist, image, id_chant FROM `user` LEFT JOIN validation ON user.id = validation.id_user LEFT JOIN chant ON user.id = chant.id_user LEFT JOIN representantlegal ON user.id = representantlegal.id_user ORDER BY user.id";
+          $sql = "SELECT user.id as id, user.surname as surname, user.name as name, user.email as email, user.birthday as birthday, register_date, title_chosen, title_validate, localisation_track, cheque, track_validate, representantlegal.name as rlname, representantlegal.surname as rlsurname, title, artist, image, id_chant FROM `user` INNER JOIN validation ON user.id = validation.id_user LEFT JOIN chant ON user.id = chant.id_user LEFT JOIN representantlegal ON user.id = representantlegal.id_user ORDER BY user.id";
           $query = $db->prepare($sql);
           $query->execute();
           $datas = $query->fetchAll();
@@ -68,6 +83,12 @@ require_once "includes/navbar.php";
 
 
           ?>
+          <style>
+            footer{
+              position: relative;
+            }
+
+          </style>
             <tr>
               <th class="text-center"><?= $value["id"] ?></th>
               <th class="text-center"><?= $value["surname"] ?></th>
@@ -76,14 +97,15 @@ require_once "includes/navbar.php";
               <th class="text-center"><?= $diff->format('%y') ?></th>
               <th class="text-center">
                 <!-- Button trigger modal -->
+                <?php
+                  if (!empty($value['title'])) : ?>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop<?= $i ?>">
                   <?php
-                  if (isset($value['title'])) {
                     echo $value['title'] . " de " . $value['artist'];
-                  }
                   ?>
                 </button>
                 <?php
+                endif;
                 if ($value['title_validate'] === 1) {
                   echo "✔️";
                 }
@@ -125,7 +147,8 @@ require_once "includes/navbar.php";
                 endif;
                 if ($value['cheque'] === 1) {
                   echo "✔️";
-                } else {
+                } 
+                elseif ($value['cheque'] === 0 && $value['track_validate'] === 1) {
                   echo "❌";
                 }
                 ?>
@@ -207,7 +230,16 @@ require_once "includes/navbar.php";
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body text-center">
-                    <p>Avez-vous bien validé le chèque ?</p>
+                    <p>Entrez l'adresse pour valider la reception du chèque :</p>
+                    <form method="POST" action="php/adress.php">
+                      <div class="adressForm">
+                    <input type="text" name="adress" placeholder="Adresse">
+                    <input type="text" name="cp" placeholder="Code Postal">
+                    <input type="text" name="city" placeholder="Ville">
+                    <input type="hidden" name="chequevalider" value="<?= $value['title_chosen'] ?>">
+                    <button type="submit">Valider</button>
+                    </div>
+                </form>
                   </div>
                   <?php
                   if ($value['cheque'] === 0) : ?>
@@ -215,10 +247,6 @@ require_once "includes/navbar.php";
                       <form action="" method="POST">
                         <input type="hidden" name="chequerefus" value="<?= $value['title_chosen'] ?>">
                         <button type="submit" class="btn btn-secondary">Refuser</button>
-                      </form>
-                      <form action="php/chequevalider.php" method="POST">
-                        <input type="hidden" name="chequevalider" value="<?= $value['title_chosen'] ?>">
-                        <button type="submit" class="btn btn-secondary">Accepter</button>
                       </form>
                     </div>
                   <?php

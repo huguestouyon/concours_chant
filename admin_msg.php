@@ -8,6 +8,11 @@ if (!isset($_SESSION["user"]) || !isset($_SESSION['user']['admin'])) {
   exit;
 }
 
+// Déconnexion a 30min d'innactivité
+if (isset($_SESSION["LAST_ACTIVITY"]) && time() - $_SESSION["LAST_ACTIVITY"] > 1800) {
+    header("Location: deconnexion.php");
+}
+
 $title = "Msg Admin";
 require_once "includes/header.php";
 require_once "includes/navbar.php";
@@ -35,6 +40,12 @@ if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
 unset($_SESSION['error']);  
 }
 ?>
+            <style>
+                footer{
+                    position: relative !important;
+                }
+
+          </style>
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">

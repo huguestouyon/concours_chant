@@ -15,8 +15,12 @@ elseif ($verifid['title_chosen'] === '0') {
     header('Location: api.php');
  }
 
-if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 0 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] === NULL ) {
-    header("Location: suiviupload.php");
+ if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 0 && $verifid['title_validate'] === 0 && $verifid['localisation_track'] === NULL ) {
+    header("Location: suivi.php");
+}
+
+if ($verifid['cheque'] === 1 && $verifid['track_validate'] === 1 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] !== NULL ) {
+    header("Location: suivifini.php");
 }
 
 if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 0 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] !== NULL ) {
@@ -129,11 +133,14 @@ include('includes/navbar.php');
 
         </div>
         <?php
-        if(isset($_SESSION["error"])){
-            var_dump($_SESSION["error"]);
-            unset($_SESSION["error"]);
-        }
-        ?>
+if ($err) {
+	echo "cURL Error #:" . $err;
+}
+if(isset($_SESSION["error"])){
+    echo '<br><p>'.$_SESSION["error"][0].'</p>';
+    unset($_SESSION["error"]);
+}
+?>
     </div>
 </div>
 </div>

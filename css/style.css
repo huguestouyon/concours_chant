@@ -53,15 +53,22 @@ nav ul{
     display: none;
 }
 
-footer{
-    position: fixed;
-    width: 100%;
+/* footer{
     height: 7vh;
-    background-color: #D9D9D9;
+    background-color: #D9D9D9 !important;
     bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+} */
+
+.text-center.w-100 {
+    background: #D9D9D9 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 7vh;
+    bottom: 0;
 }
 
 @media (max-width: 700px) { 

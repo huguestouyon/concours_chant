@@ -15,7 +15,7 @@ if (!isset($_SESSION["user"]) || !isset($_SESSION['user']['admin'])) {
         $query = $db->prepare($sql);
         $query->bindValue(":id", $id, PDO::PARAM_INT);
         $query->execute();
-        $_SESSION['validate'] = "Le message a bien été supprimer";
+        $_SESSION['validate'] = "Le message a bien été supprimé";
 
         header("Location: ../admin_msg.php");
 

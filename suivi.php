@@ -28,6 +28,10 @@ if ($verifid['cheque'] === 0 && $verifid['track_validate'] === 1 && $verifid['ti
     header("Location: suivicheque.php");
 }
 
+if ($verifid['cheque'] === 1 && $verifid['track_validate'] === 1 && $verifid['title_validate'] === 1 && $verifid['localisation_track'] !== NULL ) {
+    header("Location: suivifini.php");
+}
+
 include('includes/header.php');
 include('includes/navbar.php');
 ?>
@@ -71,9 +75,5 @@ include('includes/navbar.php');
 </div>
 
 <?php
-if(isset($_SESSION["error"])){
-    var_dump($_SESSION["error"]);
-    unset($_SESSION["error"]);
-}
 include('includes/footer.php');
 ?>
